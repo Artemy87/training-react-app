@@ -46,7 +46,7 @@ export default class Game extends Component {
 
     const moves = history.map((step, move) => {
       const desc = move ?
-        'Перейти к ходу #' + move :
+        'Перейти к ходу #' + move + this.props.squares:
         'К началу игры';
       return (
         <li key={move}>

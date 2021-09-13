@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Square from '../square';
 
 import './index.css';
 
@@ -34,14 +35,3 @@ export default class Board extends Component {
     );
   }
 }
-
-let Square = (props) => {
-  return (
-    <button 
-      className="square"
-      onClick={() => props.onClick()}
-    >
-      {props.value}
-    </button>
-  );
-};
