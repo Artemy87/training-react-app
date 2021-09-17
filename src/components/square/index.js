@@ -1,3 +1,3 @@
-import Square from './square';
+import Square from './Square';
 
 export default Square;

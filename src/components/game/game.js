@@ -15,10 +15,39 @@ export default class Game extends Component {
     }
   }
 
+  getRow(el) {
+    let row;
+    if(el <= 2 ) {
+      row = 1;
+    } else if (el >= 6) {
+      row = 3;
+    } else {
+      row = 2
+    }
+    return row;
+  }
+
+  getColumn(el) {
+    let col;
+    if(el === 0 || el === 3 || el === 6) {
+      col = 1;
+    } else if(el === 1 || el === 4 || el === 7) {
+      col = 2;
+    } else if(el === 2 || el === 5 || el === 8) {
+      col = 3;
+    }
+    return col;
+  }
+
+  
   handleClick(i) {
+    const columnNumber = this.getColumn(i);
+    const rowNumber = this.getRow(i);
+
     const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[history.length - 1];
     const squares = current.squares.slice();
+
     if (calculateWinner(squares) || squares[i]) {
       return;
     }
@@ -29,6 +58,8 @@ export default class Game extends Component {
       }]),
       stepNumber: history.length,
       xIsNext: !this.state.xIsNext,
+      column: columnNumber, //!
+      row: rowNumber,
     });
   }
 
@@ -36,8 +67,11 @@ export default class Game extends Component {
     this.setState({
       stepNumber: step,
       xIsNext: (step % 2) === 0,
+      column: this.columnNumber,
+      row: this.rowNumber
     });
   }
+
 
   render() {
     const history = this.state.history;
@@ -45,9 +79,9 @@ export default class Game extends Component {
     const winner = calculateWinner(current.squares);
 
     const moves = history.map((step, move) => {
-      const desc = move ?
-        'Перейти к ходу #' + move + this.props.squares:
-        'К началу игры';
+      const desc = move
+        ? `Перейти к ходу #${move} колонка #${this.state.column}, строка #${this.state.row}` //!
+        : 'К началу игры';
       return (
         <li key={move}>
           <button onClick={() => this.jumpTo(move)}>
