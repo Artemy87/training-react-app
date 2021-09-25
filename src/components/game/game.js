@@ -17,7 +17,7 @@ export default class Game extends Component {
     }
   }
 
-  
+
   handleClick(i) {
     const columnNumber = getColumn(i);
     const rowNumber = getRow(i);
@@ -29,24 +29,24 @@ export default class Game extends Component {
     if (calculateWinner(squares) || squares[i]) {
       return;
     }
-    squares[i] = this.state.xIsNext ? 'X' : 'O';
+    squares[i] = {
+      isNext: this.state.xIsNext ? 'X' : 'O',
+      columnNumber,
+      rowNumber
+    };
     this.setState({
       history: history.concat([{
         squares: squares,
       }]),
       stepNumber: history.length,
-      xIsNext: !this.state.xIsNext,
-      column: columnNumber, //!
-      row: rowNumber,
+      xIsNext: !this.state.xIsNext
     });
   }
 
   jumpTo(step) {
     this.setState({
       stepNumber: step,
-      xIsNext: (step % 2) === 0,
-      column: this.columnNumber,
-      row: this.rowNumber
+      xIsNext: (step % 2) === 0
     });
   }
 
